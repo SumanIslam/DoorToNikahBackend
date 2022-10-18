@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const authRouter = require('./routes/auth.router');
 
 const app = express();
 
@@ -10,5 +11,8 @@ app.use(cors({
 }));
 app.use(morgan('combined'))
 app.use(express.json());
+
+// routes
+app.use('/v1/api', authRouter)
 
 module.exports = app;
