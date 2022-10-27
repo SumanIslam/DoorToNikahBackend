@@ -13,6 +13,14 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	roles: {
+		User: {
+			type: Number,
+			default: 2001
+		},
+		Admin: Number
+	},
+	refreshToken: String,
 	date: {
 		type: Date,
 		default: Date.now,
