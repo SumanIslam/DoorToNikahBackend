@@ -1,14 +1,11 @@
 const express = require('express');
-const { signupPOST } = require('../controllers/auth.controllers')
+const { signupPOST, loginPOST } = require('../controllers/auth.controllers')
 
 
 const authRouter = express.Router();
 
 authRouter.post('/users/auth/signup', signupPOST)
 
-authRouter.post('/users/auth/login', async (req, res) => {
-  const { email, password } = req.body;
-
-})
+authRouter.post('/users/auth/login', loginPOST)
 
 module.exports = authRouter;

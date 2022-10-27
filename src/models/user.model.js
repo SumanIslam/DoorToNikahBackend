@@ -5,15 +5,14 @@ async function saveUser(newUser) {
   try {
 		// generating hashed password
 		bcrypt.genSalt(10, async (err, salt) => {
-			bcrypt.hash(newUser.password, salt,(err, hash) => {
+			bcrypt.hash(newUser.password, salt, async(err, hash) => {
 				if (err) throw err;
 				// replace plain password to hashed password
 				newUser.password = hash;
+        const user = await userModel.create(newUser);
 			});
 		});
-		// create user in db
-		const user = await userModel.create(newUser);
-    return user;
+    return newUser;
 	} catch(err) {
     console.log(err);
   }
