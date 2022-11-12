@@ -3,25 +3,7 @@ const bcrypt = require('bcryptjs');
 const { saveUser } = require("../models/user.model")
 const usersModel = require('../mongoose/user.mongo');
 
-require('dotenv').config();
-
-
-const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
-const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
-const MinAge = 3 * 24 * 60 * 60;
-const maxAge = 720 * 24 * 60 * 60;
-
-// jwt token
-const createAccessToken = (id) => {
-	return jwt.sign({ id }, ACCESS_TOKEN_SECRET, {
-		expiresIn: MinAge,
-	});
-};
-const createRefreshToken = (id) => {
-	return jwt.sign({ id }, REFRESH_TOKEN_SECRET, {
-		expiresIn: maxAge,
-	});
-};
+const { createAccessToken, createRefreshToken } = require('../services/tokenGeneration');
 
 // signup post route controller
 const signupPOST =  async (req, res) => {
@@ -63,8 +45,10 @@ const signupPOST =  async (req, res) => {
 
 const loginPOST = async (req, res) => {
   const { email, password } = req.body;
+	const cookies = req.cookies;
 
   let user = await usersModel.findOne({ email: email }).exec();
+	console.log(user);
 
 	// check if user is exist or not
   if(!user) {
@@ -89,13 +73,18 @@ const loginPOST = async (req, res) => {
 	);
 
 	res.cookie('_refresh_token', refreshToken, {
-		httpOnly: true,
-		maxAge: maxAge * 1000,
-		secure: true,
+		httpOnly: false,
+		secure: false,
 		sameSite: 'None'
 	});
 
-	return res.status(200).json({accessToken});
+	const userResponse = {
+		userId: user._id,
+		userName: user.name,
+		roles: user.roles,
+	}
+
+	return res.status(200).json({...userResponse, accessToken});
 }
 
 module.exports = {
