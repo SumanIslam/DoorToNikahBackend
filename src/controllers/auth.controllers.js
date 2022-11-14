@@ -5,7 +5,7 @@ const usersModel = require('../mongoose/user.mongo');
 
 const { createAccessToken, createRefreshToken } = require('../services/tokenGeneration');
 
-// signup post route controller
+// signup controller
 const signupPOST =  async (req, res) => {
 	const { name, email, password, confirmPassword } = req.body;
 
@@ -43,12 +43,12 @@ const signupPOST =  async (req, res) => {
 	}
 }
 
+// login controller
 const loginPOST = async (req, res) => {
   const { email, password } = req.body;
 	const cookies = req.cookies;
 
   let user = await usersModel.findOne({ email: email }).exec();
-	console.log(user);
 
 	// check if user is exist or not
   if(!user) {
@@ -73,7 +73,7 @@ const loginPOST = async (req, res) => {
 	);
 
 	res.cookie('_refresh_token', refreshToken, {
-		httpOnly: false,
+		httpOnly: true,
 		secure: false,
 		sameSite: 'None'
 	});
@@ -87,7 +87,42 @@ const loginPOST = async (req, res) => {
 	return res.status(200).json({...userResponse, accessToken});
 }
 
+// logout controller
+const logOut = async (req, res) => {
+	// On client, delete the access token
+	const cookies = req.cookies;
+
+	if (!cookies?._refresh_token) {
+		return res.sendStatus(204); // Successful, No content
+	} 
+
+	// refresh token
+	const refreshToken = cookies._refresh_token;
+
+	// Is refresh token exists in db?
+	const user = await usersModel.findOne({ refreshToken: refreshToken });
+
+	if (!user) {
+		res.clearCookie('_refresh_token', { httpOnly: true });
+
+		return res.sendStatus(204); // Successful, No content
+	}
+
+	// delete refresh token from db
+	await usersModel.findOneAndUpdate(
+		{ refreshToken: refreshToken },
+		{
+			refreshToken: '',
+		}
+	);
+
+	res.clearCookie('_refresh_token', { httpOnly: true });
+
+	return res.sendStatus(204);
+};
+
 module.exports = {
   signupPOST,
-  loginPOST
+  loginPOST,
+	logOut
 }

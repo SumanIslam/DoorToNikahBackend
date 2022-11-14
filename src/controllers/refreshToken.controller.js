@@ -17,7 +17,6 @@ const handleRefreshToken = async (req, res) => {
 
   // find user by refresh token
   const user = await usersModel.findOne({refreshToken: refreshToken})
-  console.log(user);
   if(!user) return res.sendStatus(403) // forbidden
   jwt.verify(
     refreshToken,
