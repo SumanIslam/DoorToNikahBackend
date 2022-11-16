@@ -22,10 +22,13 @@ const handleRefreshToken = async (req, res) => {
     refreshToken,
     REFRESH_TOKEN_SECRET,
     (err, decoded) => {
-      // console.log(decoded.id);
+      console.log(decoded);
       // console.log(user._id.toString());
-      if (err || user._id.toString() !== decoded.id) return res.sendStatus(403);
-      const accessToken = createAccessToken(decoded.id)
+      if (err || user._id.toString() !== decoded.userInfo.userId) return res.sendStatus(403);
+      const accessToken = createAccessToken(
+				decoded.userInfo.userId,
+				decoded.userInfo.roles
+			);
       res.json({accessToken})
     }
   )

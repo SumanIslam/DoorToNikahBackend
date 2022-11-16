@@ -7,15 +7,33 @@ const MinAge = 3 * 24 * 60 * 60;
 const maxAge = 720 * 24 * 60 * 60;
 
 // jwt token
-const createAccessToken = (id) => {
-	return jwt.sign({ id }, ACCESS_TOKEN_SECRET, {
-		expiresIn: MinAge,
-	});
+const createAccessToken = (id, roles) => {
+	return jwt.sign(
+		{
+			userInfo: {
+				userId: id,
+				roles: roles,
+			},
+		},
+		ACCESS_TOKEN_SECRET,
+		{
+			expiresIn: MinAge,
+		}
+	);
 };
-const createRefreshToken = (id) => {
-	return jwt.sign({ id }, REFRESH_TOKEN_SECRET, {
-		expiresIn: maxAge,
-	});
+const createRefreshToken = (id, roles) => {
+	return jwt.sign(
+		{ 
+			"userInfo": {
+				"userId": id,
+				"roles": roles
+			}
+	 	},
+		REFRESH_TOKEN_SECRET,
+		{
+			expiresIn: maxAge,
+		}
+	);
 };
 
 module.exports = {
