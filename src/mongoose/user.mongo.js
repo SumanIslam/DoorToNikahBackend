@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
 		Admin: Number
 	},
 	refreshToken: String,
+	biodataId: {
+		type: String,
+		default: ''
+	},
 	date: {
 		type: Date,
 		default: Date.now,

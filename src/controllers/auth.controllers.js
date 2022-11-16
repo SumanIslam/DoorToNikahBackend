@@ -63,8 +63,8 @@ const loginPOST = async (req, res) => {
   }
 
 	// generating accessToken and refreshToken
-  const accessToken = createAccessToken(user._id);
-  const refreshToken = createRefreshToken(user._id);
+  const accessToken = createAccessToken(user._id, user.roles);
+  const refreshToken = createRefreshToken(user._id, user.roles);
 
 	// save refreshToken in db
 	await usersModel.findByIdAndUpdate(
@@ -82,7 +82,10 @@ const loginPOST = async (req, res) => {
 		userId: user._id,
 		userName: user.name,
 		roles: user.roles,
+		biodataId: user.biodataId
 	}
+
+	req.user = { id: user._id };
 
 	return res.status(200).json({...userResponse, accessToken});
 }
