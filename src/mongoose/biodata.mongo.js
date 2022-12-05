@@ -270,6 +270,10 @@ const biodataSchema = new mongoose.Schema({
 			required: true,
 		},
 	},
+	biodataId: {
+		type: String,
+		required: true,
+	},
 	date: {
 		type: Date,
 		default: Date.now,

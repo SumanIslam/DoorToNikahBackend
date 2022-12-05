@@ -5,7 +5,8 @@ const cookieParser = require('cookie-parser')
 
 // router
 const authRouter = require('./routes/auth.router');
-const refreshRouter = require('./routes/refresh.router')
+const refreshRouter = require('./routes/refresh.router');
+const registrationRouter = require('./routes/registration.router');
 
 // cors option
 const corsOptions = require('./config/corsOptions');
@@ -28,6 +29,7 @@ app.use(cookieParser());
 
 // routes
 app.use('/v1/api', authRouter);
-app.use('/refresh', refreshRouter)
+app.use('/refresh', refreshRouter);
+app.use('/v1/api', registrationRouter);
 
 module.exports = app;
