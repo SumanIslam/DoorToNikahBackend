@@ -1,7 +1,21 @@
+// const {
+// 	candidatesNameValidation,
+// 	generalInfoValidation,
+// 	addressValidation,
+// 	educationalQualificationValidation,
+// 	familyInfoValidation,
+// 	personalInfoValidation,
+// 	marriageInfoValidation,
+// 	partnersCharacteristicsValidation,
+// 	authoritysAskValidation,
+// 	contactInfoValidation,
+// } = require('../helper-function/helper-function');
+
+
 // candidatesName validation
 const candidatesNameValidation = (candidatesName) => {
-  return candidatesName?.name !== ''
-}
+	return candidatesName?.name !== '';
+};
 
 // generalInfo validation
 const generalInfoValidation = (generalInfo) => {
@@ -33,72 +47,77 @@ const addressValidation = (address) => {
 // educational qualification validation
 const educationalQualificationValidation = (educationalQualification) => {
 	let validation = educationalQualification?.mediumOfStudy !== '';
-	if(educationalQualification?.mediumOfStudy === 'জেনারেল') {
+	if (educationalQualification?.mediumOfStudy === 'জেনারেল') {
 		validation = educationalQualification?.sscOrEquivalentStudy !== '';
-		if(educationalQualification?.sscOrEquivalentStudy === 'হ্যাঁ') {
+		if (educationalQualification?.sscOrEquivalentStudy === 'হ্যাঁ') {
 			validation =
 				educationalQualification?.sscOrEquivalentResult !== '' &&
 				educationalQualification?.sscOrEquivalentDivision !== '' &&
 				educationalQualification?.sscOrEquivalentPassingYear !== '' &&
 				educationalQualification?.hscOrEquivalentStudy !== '';
-				// if passed hsc
-				if(educationalQualification?.hscOrEquivalentStudy === 'হ্যাঁ') {
+			// if passed hsc
+			if (educationalQualification?.hscOrEquivalentStudy === 'হ্যাঁ') {
+				validation =
+					validation &&
+					educationalQualification?.hscOrEquivalentResult !== '' &&
+					educationalQualification?.hscOrEquivalentDivision !== '' &&
+					educationalQualification?.hscOrEquivalentPassingYear !== '';
+
+				if (educationalQualification?.honsOrEquivalentStudy) {
 					validation =
 						validation &&
-						educationalQualification?.hscOrEquivalentResult !== '' &&
-						educationalQualification?.hscOrEquivalentDivision !== '' &&
-						educationalQualification?.hscOrEquivalentPassingYear !== '';
-
-						if (educationalQualification?.honsOrEquivalentStudy) {
-							validation =
-								validation &&
-								educationalQualification?.honsInstituteName !== '' &&
-								educationalQualification?.honsPassingYear !== '';
-							return validation;
-						}
-					
+						educationalQualification?.honsInstituteName !== '' &&
+						educationalQualification?.honsPassingYear !== '';
 					return validation;
-				} else if (educationalQualification?.hscOrEquivalentStudy === 'না') {
-					// if didn't pass hsc
-					validation =
-						validation && educationalQualification?.hscSession !== '';
+				}
 
-					return validation;
-				} else if(educationalQualification?.hscOrEquivalentStudy === 'ডিপ্লোমা পড়েছি') {
-					validation = validation && educationalQualification?.diplomaSubject !== '' &&
+				return validation;
+			} else if (educationalQualification?.hscOrEquivalentStudy === 'না') {
+				// if didn't pass hsc
+				validation = validation && educationalQualification?.hscSession !== '';
+
+				return validation;
+			} else if (
+				educationalQualification?.hscOrEquivalentStudy === 'ডিপ্লোমা পড়েছি'
+			) {
+				validation =
+					validation &&
+					educationalQualification?.diplomaSubject !== '' &&
 					educationalQualification?.diplomaInstituteName !== '' &&
 					educationalQualification?.diplomaPassingYear !== '';
 
-					return validation;
-				}
+				return validation;
+			}
 			return validation;
-		}else if(educationalQualification?.sscOrEquivalentStudy === 'না') {
+		} else if (educationalQualification?.sscOrEquivalentStudy === 'না') {
 			validation = educationalQualification?.highestClass !== '';
 			return validation;
 		}
 	} else if (educationalQualification?.mediumOfStudy === 'মাদ্রাসা') {
-		validation = educationalQualification?.IsHafez !== '' && educationalQualification?.passDaorayeHadis !== '';
-		if(educationalQualification?.passDaorayeHadis === 'হ্যাঁ') {
+		validation =
+			educationalQualification?.IsHafez !== '' &&
+			educationalQualification?.passDaorayeHadis !== '';
+		if (educationalQualification?.passDaorayeHadis === 'হ্যাঁ') {
 			validation =
 				validation &&
 				educationalQualification?.DaorayeHadisPassingYear !== '' &&
 				educationalQualification?.DaorayeHadisResult !== '' &&
 				educationalQualification?.studyTakhassos !== '';
-				if(educationalQualification?.studyTakhassos === 'হ্যাঁ') {
-					validation =
-						validation &&
-						educationalQualification?.takhassosSubject !== '' &&
-						educationalQualification?.takhassosPassingYear !== '';
-					return validation;
-				}
+			if (educationalQualification?.studyTakhassos === 'হ্যাঁ') {
+				validation =
+					validation &&
+					educationalQualification?.takhassosSubject !== '' &&
+					educationalQualification?.takhassosPassingYear !== '';
 				return validation;
+			}
+			return validation;
 		} else if (educationalQualification?.passDaorayeHadis === 'না, এখনো পড়ছি') {
-			validation = validation && educationalQualification?.daorayeHadisYear !== '';
+			validation =
+				validation && educationalQualification?.daorayeHadisYear !== '';
 			return validation;
 		}
 		return validation;
 	}
-	
 };
 
 // familyInfo validation
@@ -111,17 +130,17 @@ const familyInfoValidation = (familyInfo) => {
 		familyInfo?.numberOfBrothers !== '' &&
 		familyInfo?.numberOfSisters !== '' &&
 		familyInfo?.financialAndSocialCondition !== '';
-	if(familyInfo?.numberOfBrothers !== '') {
+	if (familyInfo?.numberOfBrothers !== '') {
 		validation = validation && familyInfo?.brothersInfo !== '';
 		return validation;
 	}
-	if(familyInfo?.numberOfSisters !== '') {
+	if (familyInfo?.numberOfSisters !== '') {
 		validation = validation && familyInfo?.sistersInfo !== '';
 		return validation;
 	}
 
 	return validation;
-}
+};
 
 // personalInfo Validation
 const personalInfoValidation = (personalInfo, generalInfo) => {
@@ -138,7 +157,7 @@ const personalInfoValidation = (personalInfo, generalInfo) => {
 		personalInfo?.favoriteIslamicBooks !== '' &&
 		personalInfo?.favoriteIslamicScholar !== '' &&
 		personalInfo?.aboutYourself !== '';
-	
+
 	// if biodataType is groom
 	if (generalInfo?.biodataType === 'পাত্রের বায়োডাটা') {
 		validation =
@@ -147,15 +166,13 @@ const personalInfoValidation = (personalInfo, generalInfo) => {
 			personalInfo?.clothesOverAnkle !== '' &&
 			personalInfo?.outdoorClothes !== '';
 		return validation;
-	} else if(generalInfo?.biodataType === 'পাত্রীর বায়োডাটা') {
-		validation =
-			validation &&
-			personalInfo?.outdoorClothes !== '';
+	} else if (generalInfo?.biodataType === 'পাত্রীর বায়োডাটা') {
+		validation = validation && personalInfo?.outdoorClothes !== '';
 		return validation;
 	}
 
 	return validation;
-}
+};
 // marriageInfo Validation
 const marriageInfoValidation = (marriageInfo, generalInfo) => {
 	let validation =
@@ -172,7 +189,7 @@ const marriageInfoValidation = (marriageInfo, generalInfo) => {
 			marriageInfo?.expectDowry !== '';
 
 		return validation;
-		
+
 		if (generalInfo?.maritalStatus === 'বিবাহিত') {
 			// and his marital status is married
 			validation = validation && marriageInfo?.reasonOfMarriageAgain !== '';
@@ -225,7 +242,7 @@ const partnersCharacteristicsValidation = (partnersCharacteristics) => {
 		partnersCharacteristics?.partnersDesirableCharacteristics !== '';
 
 	return validation;
-}
+};
 
 // authoritysAsk validation
 const authoritysAskValidation = (authoritysAsk) => {
