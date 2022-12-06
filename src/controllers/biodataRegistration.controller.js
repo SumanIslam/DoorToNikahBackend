@@ -11,7 +11,10 @@ const {
 	contactInfoValidation,
 } = require('../helper-function/helper-function');
 
-const registrationPOST = (req, res) => {
+const { saveBiodata } = require('../models/biodata.model');
+const biodataModel = require('../mongoose/biodata.mongo')
+
+const registrationPOST = async (req, res) => {
 	const {
 		candidatesName,
 		generalInfo,
@@ -96,7 +99,10 @@ const registrationPOST = (req, res) => {
 			msg: 'You did not fill out all the field on "যোগাযোগ" section',
 		});
 	}
-	
+
+	// save biodata in db
+	const biodata = await saveBiodata(req.body);
+	return res.status(200).json(biodata)
 }
 
 module.exports = {
