@@ -85,6 +85,75 @@ const biodataSchema = new mongoose.Schema({
 			type: String,
 			required: true,
 		},
+		sscOrEquivalentStudy: {
+			type: String,
+		},
+		sscOrEquivalentResult: {
+			type: String,
+		},
+		sscOrEquivalentDivision: {
+			type: String,
+		},
+		sscOrEquivalentPassingYear: {
+			type: String,
+		},
+		hscOrEquivalentStudy: {
+			type: String,
+		},
+		hscOrEquivalentResult: {
+			type: String,
+		},
+		hscOrEquivalentDivision: {
+			type: String,
+		},
+		hscOrEquivalentPassingYear: {
+			type: String,
+		},
+		honsOrEquivalentStudy: {
+			type: String,
+		},
+		honsInstituteName: {
+			type: String,
+		},
+		honsPassingYear: {
+			type: String,
+		},
+		hscSession: {
+			type: String,
+		},
+		diplomaSubject: {
+			type: String,
+		},
+		diplomaInstituteName: {
+			type: String,
+		},
+		diplomaPassingYear: {
+			type: String,
+		},
+		highestClass: {
+			type: String,
+		},
+		passDaorayeHadis: {
+			type: String,
+		},
+		DaorayeHadisPassingYear: {
+			type: String,
+		},
+		DaorayeHadisResult: {
+			type: String,
+		},
+		studyTakhassos: {
+			type: String,
+		},
+		takhassosSubject: {
+			type: String,
+		},
+		takhassosPassingYear: {
+			type: String,
+		},
+		daorayeHadisYear: {
+			type: String,
+		},
 		otherEducationalInfo: {
 			type: String,
 		},
@@ -113,6 +182,12 @@ const biodataSchema = new mongoose.Schema({
 		numberOfSisters: {
 			type: String,
 			required: true,
+		},
+		brothersInfo: {
+			type: String,
+		},
+		sistersInfo: {
+			type: String,
 		},
 		unclesOccupation: {
 			type: String,
@@ -181,6 +256,18 @@ const biodataSchema = new mongoose.Schema({
 			type: String,
 			required: true,
 		},
+		specialSkills: {
+			type: String,
+		},
+		haveSunnatiBeard: {
+			type: String,
+		},
+		clothesOverAnkle: {
+			type: String,
+		},
+		outdoorClothes: {
+			type: String,
+		},
 	},
 	marriageInfo: {
 		parentsConsent: {
@@ -191,9 +278,42 @@ const biodataSchema = new mongoose.Schema({
 			type: String,
 			required: true,
 		},
+		manageWifesParda: {
+			type: String,
+		},
+		allowWifesStudy: {
+			type: String,
+		},
+		allowWifesJob: {
+			type: String,
+		},
+		placeToLiveWithWife: {
+			type: String,
+		},
+		wantToDoJobAfterMarriage: {
+			type: String,
+		},
+		wantToStudyAfterMarriage: {
+			type: String,
+		},
+		reasonOfMarriageAgain: {
+			type: String,
+		},
+		reasonOfDivorce: {
+			type: String,
+		},
+		wifesDeathInfo: {
+			type: String,
+		},
+		husbandsDeathInfo: {
+			type: String,
+		},
 	},
 	otherInfo: {
 		termsToInclude: {
+			type: String,
+		},
+		occupationInfo: {
 			type: String,
 		},
 	},
