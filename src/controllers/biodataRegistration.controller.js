@@ -1,3 +1,16 @@
+const {
+	candidatesNameValidation,
+	generalInfoValidation,
+	addressValidation,
+	educationalQualificationValidation,
+	familyInfoValidation,
+	personalInfoValidation,
+	marriageInfoValidation,
+	partnersCharacteristicsValidation,
+	authoritysAskValidation,
+	contactInfoValidation,
+} = require('../helper-function/helper-function');
+
 const registrationPOST = (req, res) => {
 	const {
 		candidatesName,
@@ -14,114 +27,77 @@ const registrationPOST = (req, res) => {
 		biodataId,
 	} = req.body;
 
-	// validation: if biodataType is groom
-	if (generalInfo.biodataType === 'পাত্রের বায়োডাটা') {
-		const validation1 =
-			personalInfo.haveSunnatiBeard !== '' &&
-			personalInfo.clothesOverAnkle !== '' &&
-			personalInfo.outdoorClothes !== '';
-
-		const validation2 =
-			marriageInfo.manageWifesParda !== '' &&
-			marriageInfo.allowWifesStudy !== '' &&
-			marriageInfo.allowWifesJob !== '' &&
-			marriageInfo.placeToLiveWithWife !== '' &&
-			marriageInfo.expectDowry !== '';
-
-		// then 'haveSunnatiBeard, wearClothesOverAnkle,typeOfClothes field can't be empty
-		if (!validation1) {
-			return res.status(400).json({
-				msg: 'You did not fill out all the field on "ব্যক্তিগত তথ্য" section',
-			});
-		}
-		// and 'manageWifesParda, allowWifesStudy, allowWifesJob, placeToLiveWithWife, expectDowry' field can't be empty
-		if (!validation2) {
-			return res.status(400).json({
-				msg: 'You did not fill out all the field on "বিয়ে সংক্রান্ত তথ্য" section',
-			});
-		}
-
-		if (generalInfo.maritalStatus === 'বিবাহিত') {
-			// and his marital status is married
-			const validation = marriageInfo.reasonOfMarriageAgain !== '';
-
-			// then 'reasonOfMarriageAgain' field can't be empty
-			if (!validation) {
-				return res.status(400).json({
-					msg: 'You did not fill out all the field on "বিয়ে সংক্রান্ত তথ্য" section',
-				});
-			}
-		} else if (generalInfo.maritalStatus === 'ডিভোর্সড') {
-			// and his marital status is divorced
-			const validation =
-				marriageInfo.reasonOfDivorced !== '';
-
-			// then 'reasonOfDivorced' field can't be empty
-			if (!validation) {
-				return res.status(400).json({
-					msg: 'You did not fill out all the field on "বিয়ে সংক্রান্ত তথ্য" section',
-				});
-			}
-		} else if (generalInfo.maritalStatus === 'বিপত্নীক') {
-			// and his marital status is Widower
-			const validation = marriageInfo.wifesDeathInfo !== '';
-
-			// then 'howYourWifeDied' field can't be empty
-			if (!validation) {
-				return res.status(400).json({
-					msg: 'You did not fill out all the field on "বিয়ে সংক্রান্ত তথ্য" section',
-				});
-			}
-		}
+	// candidatesName validation
+	if(!candidatesNameValidation(candidatesName)) {
+		return res.status(400).json({
+			msg: 'You did not fill out all the field on "নাম" section',
+		});
 	}
 
-	// validation: if biodataType is bride
-  if(generalInfo.biodataType === 'পাত্রীর বায়োডাটা') {
-			// and her marital status is single
-			const validation1 =
-				personalInfo.typeOfClothes !== '';
+	// general info validation
+	if(!generalInfoValidation(generalInfo)) {
+		return res.status(400).json({
+			msg: 'You did not fill out all the field on "সাধারণ তথ্য" section',
+		});
+	}
 
-			const validation2 =
-				marriageInfo.wantToDoJobAfterMarriage !== '' &&
-				marriageInfo.wantToStudyAfterMarriage !== '';
+	// address validation
+	if(!addressValidation(address)) {
+		return res.status(400).json({
+			msg: 'You did not fill out all the field on "ঠিকানা" section',
+		});
+	}
 
-			// then 'typeOfClothes' field can't be empty
-			if (!validation1) {
-				return res.status(400).json({
-					msg: 'You did not fill out all the field on "ব্যক্তিগত তথ্য" section',
-				});
-			}
-			// and 'wantFreedomForStudy, wantFreedomForJob' field can't be empty
-			if (!validation2) {
-				return res.status(400).json({
-					msg: 'You did not fill out all the field on "বিয়ে সংক্রান্ত তথ্য" section',
-				});
-			}
-    if (generalInfo.maritalStatus === 'ডিভোর্সড') {
-			// and her marital status is divorced
-			const validation =
-				marriageInfo.reasonOfDivorced !== '';
+	// educational qualification validation
+	if(!educationalQualificationValidation(educationalQualification)) {
+		return res.status(400).json({
+			msg: 'You did not fill out all the field on "শিক্ষাগত যোগ্যতা" section',
+		});
+	}
 
-			// then 'reasonOfDivorced' field can't be empty
-			if (!validation) {
-				return res.status(400).json({
-					msg: 'You did not fill out all the field on "বিয়ে সংক্রান্ত তথ্য" section',
-				});
-			}
-		} else if(generalInfo.maritalStatus === 'বিধবা') {
-			// and her marital status is Widow
-			const validation = marriageInfo.husbandsDeathInfo !== '';
+	// family info validation
+	if (!familyInfoValidation(familyInfo)) {
+		return res.status(400).json({
+			msg: 'You did not fill out all the field on "পারিবারিক তথ্য" section',
+		});
+	}
 
-			// then 'husbandsDeathInfo' field can't be empty
-			if (!validation) {
-				return res.status(400).json({
-					msg: 'You did not fill out all the field on "বিয়ে সংক্রান্ত তথ্য" section',
-				});
-			}
-		}
-  }
+	// personal info validation
+	if (!personalInfoValidation(personalInfo, generalInfo)) {
+		return res.status(400).json({
+			msg: 'You did not fill out all the field on "ব্যক্তিগত তথ্য" section',
+		});
+	}
+
+	// marriage info validation
+	if (!marriageInfoValidation(marriageInfo, generalInfo)) {
+		return res.status(400).json({
+			msg: 'You did not fill out all the field on "বিয়ে সংক্রান্ত তথ্য" section',
+		});
+	}
+
+	// partners characteristics validation
+	if (!partnersCharacteristicsValidation(partnersCharacteristics)) {
+		return res.status(400).json({
+			msg: 'You did not fill out all the field on "যেমন জীবনসঙ্গী আশা করেন" section',
+		});
+	}
+
+	// authoritysAsk validation
+	if (!authoritysAskValidation(authoritysAsk)) {
+		return res.status(400).json({
+			msg: 'You did not fill out all the field on "কর্তৃপক্ষের জিজ্ঞাসা" section',
+		});
+	}
+
+	// contact validation
+	if (!contactInfoValidation(contactInfo)) {
+		return res.status(400).json({
+			msg: 'You did not fill out all the field on "যোগাযোগ" section',
+		});
+	}
+	
 }
-
 
 module.exports = {
   registrationPOST,
