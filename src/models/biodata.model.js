@@ -12,14 +12,6 @@ async function saveBiodata(newBiodata) {
     console.log(err);
   }
 }
-async function updateBiodata(newBiodata) {
-  try {
-    const biodata = await biodataModel.create(newBiodata);
-    return biodata;
-  } catch(err) {
-    console.log(err);
-  }
-}
 
 module.exports = {
   saveBiodata,

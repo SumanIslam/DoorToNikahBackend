@@ -1,16 +1,3 @@
-const {
-	candidatesNameValidation,
-	generalInfoValidation,
-	addressValidation,
-	educationalQualificationValidation,
-	familyInfoValidation,
-	personalInfoValidation,
-	marriageInfoValidation,
-	partnersCharacteristicsValidation,
-	authoritysAskValidation,
-	contactInfoValidation,
-} = require('../helper-function/helper-function');
-
 const { saveBiodata } = require('../models/biodata.model');
 const biodataModel = require('../mongoose/biodata.mongo')
 
@@ -31,78 +18,86 @@ const registrationPOST = async (req, res) => {
 	} = req.body;
 
 	// candidatesName validation
-	if(!candidatesNameValidation(candidatesName)) {
+	if(!candidatesName) {
 		return res.status(400).json({
 			msg: 'You did not fill out all the field on "নাম" section',
 		});
 	}
 
 	// general info validation
-	if(!generalInfoValidation(generalInfo)) {
+	if(!generalInfo) {
 		return res.status(400).json({
 			msg: 'You did not fill out all the field on "সাধারণ তথ্য" section',
 		});
 	}
 
 	// address validation
-	if(!addressValidation(address)) {
+	if (!address) {
 		return res.status(400).json({
 			msg: 'You did not fill out all the field on "ঠিকানা" section',
 		});
 	}
 
 	// educational qualification validation
-	if(!educationalQualificationValidation(educationalQualification)) {
+	if (
+		!educationalQualification
+	) {
 		return res.status(400).json({
 			msg: 'You did not fill out all the field on "শিক্ষাগত যোগ্যতা" section',
 		});
 	}
 
 	// family info validation
-	if (!familyInfoValidation(familyInfo)) {
+	if (!familyInfo) {
 		return res.status(400).json({
 			msg: 'You did not fill out all the field on "পারিবারিক তথ্য" section',
 		});
 	}
 
 	// personal info validation
-	if (!personalInfoValidation(personalInfo, generalInfo)) {
+	if (!personalInfo) {
 		return res.status(400).json({
 			msg: 'You did not fill out all the field on "ব্যক্তিগত তথ্য" section',
 		});
 	}
 
 	// marriage info validation
-	if (!marriageInfoValidation(marriageInfo, generalInfo)) {
+	if (!marriageInfo) {
 		return res.status(400).json({
 			msg: 'You did not fill out all the field on "বিয়ে সংক্রান্ত তথ্য" section',
 		});
 	}
 
 	// partners characteristics validation
-	if (!partnersCharacteristicsValidation(partnersCharacteristics)) {
+	if (
+		!partnersCharacteristics
+	) {
 		return res.status(400).json({
 			msg: 'You did not fill out all the field on "যেমন জীবনসঙ্গী আশা করেন" section',
 		});
 	}
 
 	// authoritysAsk validation
-	if (!authoritysAskValidation(authoritysAsk)) {
+	if (!authoritysAsk) {
 		return res.status(400).json({
 			msg: 'You did not fill out all the field on "কর্তৃপক্ষের জিজ্ঞাসা" section',
 		});
 	}
 
 	// contact validation
-	if (!contactInfoValidation(contactInfo)) {
+	if (!contactInfo) {
 		return res.status(400).json({
 			msg: 'You did not fill out all the field on "যোগাযোগ" section',
 		});
 	}
 
 	// save biodata in db
-	const biodata = await saveBiodata(req.body);
-	return res.status(200).json(biodata)
+	try {
+		const biodata = await saveBiodata(req.body);
+		return res.status(200).json(biodata)
+	} catch(err) {
+		return res.status(500).json({ msg: 'Internal Server Error' });
+	}
 }
 
 module.exports = {
