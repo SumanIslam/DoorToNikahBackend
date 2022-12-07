@@ -13,6 +13,16 @@ async function saveBiodata(newBiodata) {
   }
 }
 
+async function getSingleBiodata(biodataId) {
+  try {
+    const biodata = await biodataModel.findOne({biodataId: biodataId})
+    return biodata;
+  } catch(err) {
+    console.log(err);
+  }
+}
+
 module.exports = {
   saveBiodata,
+  getSingleBiodata
 }

@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser')
 const authRouter = require('./routes/auth.router');
 const refreshRouter = require('./routes/refresh.router');
 const registrationRouter = require('./routes/registration.router');
+const biodataRouter = require('./routes/biodata.router');
 
 // cors option
 const corsOptions = require('./config/corsOptions');
@@ -31,5 +32,6 @@ app.use(cookieParser());
 app.use('/v1/api', authRouter);
 app.use('/refresh', refreshRouter);
 app.use('/v1/api', registrationRouter);
+app.use('/v1/api', biodataRouter);
 
 module.exports = app;
