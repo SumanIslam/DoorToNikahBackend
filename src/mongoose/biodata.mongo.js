@@ -312,6 +312,9 @@ const biodataSchema = new mongoose.Schema({
 		husbandsDeathInfo: {
 			type: String,
 		},
+		expectDowry: {
+			type: String,
+		},
 	},
 	otherInfo: {
 		termsToInclude: {
