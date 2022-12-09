@@ -133,6 +133,9 @@ const biodataSchema = new mongoose.Schema({
 		highestClass: {
 			type: String,
 		},
+		isHafez: {
+			type: String,
+		},
 		passDaorayeHadis: {
 			type: String,
 		},
