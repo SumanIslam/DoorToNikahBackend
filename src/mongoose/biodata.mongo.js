@@ -228,7 +228,7 @@ const biodataSchema = new mongoose.Schema({
 		watchFilm: {
 			type: String,
 		},
-		mentalProblem: {
+		mentalOrPhysicalProblem: {
 			type: String,
 			required: true,
 		},
