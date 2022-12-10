@@ -22,7 +22,17 @@ async function getSingleBiodata(biodataId) {
   }
 }
 
-module.exports = {
-  saveBiodata,
-  getSingleBiodata
+async function deleteSingleBiodata(biodataId) {
+  console.log(biodataId);
+  try {
+    return await biodataModel.findOneAndDelete({biodataId: biodataId});
+  } catch(err) {
+    console.log(err)
+  }
 }
+
+module.exports = {
+	saveBiodata,
+	getSingleBiodata,
+	deleteSingleBiodata,
+};
