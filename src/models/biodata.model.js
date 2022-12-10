@@ -30,9 +30,37 @@ async function deleteSingleBiodata(biodataId) {
     console.log(err)
   }
 }
+async function getTotalCountOfBiodata() {
+  try {
+    return await biodataModel.countDocuments();
+  } catch(err) {
+    console.log(err)
+  }
+}
+async function getTotalMaleCountOfBiodata() {
+  try {
+    return await biodataModel.countDocuments({
+			'generalInfo.biodataType': 'পাত্রের বায়োডাটা',
+		});
+  } catch(err) {
+    console.log(err)
+  }
+}
+async function getTotalFemaleCountOfBiodata() {
+  try {
+    return await biodataModel.countDocuments({
+			'generalInfo.biodataType': 'পাত্রীর বায়োডাটা',
+		});
+  } catch(err) {
+    console.log(err)
+  }
+}
 
 module.exports = {
 	saveBiodata,
 	getSingleBiodata,
 	deleteSingleBiodata,
+	getTotalCountOfBiodata,
+	getTotalMaleCountOfBiodata,
+	getTotalFemaleCountOfBiodata,
 };

@@ -1,4 +1,10 @@
-const { getSingleBiodata, deleteSingleBiodata } = require('../models/biodata.model');
+const {
+	getSingleBiodata,
+	deleteSingleBiodata,
+	getTotalCountOfBiodata,
+	getTotalMaleCountOfBiodata,
+	getTotalFemaleCountOfBiodata,
+} = require('../models/biodata.model');
 const biodataModel = require('../mongoose/biodata.mongo');
 
 const SingleBiodataGET = async (req, res) => {
@@ -15,7 +21,6 @@ const SingleBiodataGET = async (req, res) => {
 
 const deleteBiodataGET = async (req, res) => {
 	const biodataId = req.query.biodataId;
-	console.log(req);
 
 	// delete a single biodata
 	try {
@@ -24,8 +29,22 @@ const deleteBiodataGET = async (req, res) => {
 		return res.status(500).json({ msg: 'Internal Server Error' });
 	}
 }
+const countBiodataGET = async (req, res) => {
+
+	// count all the biodata, male biodata and female biodata
+	try {
+		const totalBiodataCount = await getTotalCountOfBiodata();
+		const totalMaleBiodataCount = await getTotalMaleCountOfBiodata();
+		const totalFemaleBiodataCount = await getTotalFemaleCountOfBiodata();
+		
+		return res.status(200).json({totalBiodataCount, totalMaleBiodataCount, totalFemaleBiodataCount});
+	} catch (err) {
+		return res.status(500).json({ msg: 'Internal Server Error' });
+	}
+};
 
 module.exports = {
 	SingleBiodataGET,
-	deleteBiodataGET
+	deleteBiodataGET,
+	countBiodataGET,
 };
