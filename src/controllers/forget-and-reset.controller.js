@@ -115,9 +115,57 @@ const resetPasswordPOST = async (req, res) => {
 		res.status(500).json({msg: 'Internal server Error'})
 	}
 };
+const changePasswordPOST = async (req, res) => {
+	const { email, oldPassword, newPassword, confirmNewPassword } = req.body;
+
+	// checking the length of password
+	if (newPassword?.length < 6) {
+		return res
+			.status(400)
+			.json({ msg: 'Passwords must be at least 6 characters long' });
+	}
+
+	// checking both passwords are correct or not
+	if (newPassword !== confirmNewPassword) {
+		return res.status(400).json({ msg: 'New Password and Confirm New Password do not match' });
+	}
+
+	const oldUser = await userModel.findOne({ email: email });
+
+	if (!oldUser) {
+		return res.status(400).json({ msg: "Email doesn't exist" });
+	}
+
+	try {
+		const match = await bcrypt.compare(oldPassword, oldUser.password);
+    console.log(match);
+    if(match) {
+      const encryptedPasswords = await bcrypt.hash(newPassword, 10);
+			const updatedUser = await userModel.updateOne(
+				{
+					email: email,
+				},
+				{
+					$set: {
+						password: encryptedPasswords,
+					},
+				}
+			);
+			return res.status(200).json({msg: 'Passwords has been updated successfully'})
+		} else {
+      return res.status(400).json({msg: 'Password doesn\'t match. Please enter correct password'})
+    }
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ msg: 'Internal server Error' });
+	}
+};
+
+
 
 module.exports = {
 	forgetPasswordPOST,
 	resetPasswordGET,
 	resetPasswordPOST,
+	changePasswordPOST,
 };

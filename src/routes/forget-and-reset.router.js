@@ -3,6 +3,7 @@ const {
 	forgetPasswordPOST,
 	resetPasswordGET,
 	resetPasswordPOST,
+	changePasswordPOST,
 } = require('../controllers/forget-and-reset.controller');
 
 const forgetAndResetRouter = express.Router();
@@ -15,6 +16,10 @@ forgetAndResetRouter.get(
 forgetAndResetRouter.post(
 	'/password/reset-password/:id/:token',
 	resetPasswordPOST
+);
+forgetAndResetRouter.post(
+	'/password/change-password',
+	changePasswordPOST
 );
 
 module.exports = forgetAndResetRouter;
