@@ -2,6 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const passport = require('passport');
+const cookieSession = require('cookie-session')
+const passportSetup = require('./services/passport-setup');
 
 // router
 const authRouter = require('./routes/auth.router');
@@ -19,6 +22,19 @@ const app = express();
 app.use(cors(corsOptions));
 app.use(morgan('combined'));
 app.use(express.json());
+
+// cookie session
+app.use(
+	cookieSession({
+		name: 'session',
+		maxAge: 24 * 60 * 60 * 1000,
+		keys: [process.env.COOKIE_KEY],
+	})
+);
+
+// passport initialize
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(function (req, res, next) {
 	res.header('Access-Control-Allow-Origin', req.headers.origin);
