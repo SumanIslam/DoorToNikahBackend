@@ -5,6 +5,9 @@ const {
 	getTotalMaleCountOfBiodata,
 	getTotalFemaleCountOfBiodata,
 } = require('../models/biodata.model');
+
+const { getBiodatas } = require('../services/getBiodatas-helper')
+
 const biodataModel = require('../mongoose/biodata.mongo');
 
 const SingleBiodataGET = async (req, res) => {
@@ -15,6 +18,17 @@ const SingleBiodataGET = async (req, res) => {
 		const biodata = await getSingleBiodata(biodataId);
 		return res.status(200).json(biodata);
 	} catch (err) {
+		return res.status(500).json({ msg: 'Internal Server Error' });
+	}
+};
+
+// get biodatas from db
+const BiodatasGET = async (req, res) => {
+	try {
+		const biodatas = await getBiodatas(req.query.BiodataDetails);
+		return res.status(200).json(biodatas);
+	} catch(err) {
+		console.log(err);
 		return res.status(500).json({ msg: 'Internal Server Error' });
 	}
 };
@@ -30,7 +44,6 @@ const deleteBiodataGET = async (req, res) => {
 	}
 }
 const countBiodataGET = async (req, res) => {
-
 	// count all the biodata, male biodata and female biodata
 	try {
 		const totalBiodataCount = await getTotalCountOfBiodata();
@@ -47,4 +60,5 @@ module.exports = {
 	SingleBiodataGET,
 	deleteBiodataGET,
 	countBiodataGET,
+	BiodatasGET,
 };
