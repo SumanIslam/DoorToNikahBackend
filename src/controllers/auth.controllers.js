@@ -9,6 +9,17 @@ const { createAccessToken, createRefreshToken } = require('../services/tokenGene
 const signupPOST =  async (req, res) => {
 	const { name, email, password, confirmPassword } = req.body;
 
+	const regex = /^([a-z\d\.]+)@([a-z]+)\.([a-z]{2,3})([\.a-z]{2,3})?$/;
+	const isEmailSyntaxCorrect = regex.test(email);
+
+	// checking syntax of email - valid or invalid
+	if(!isEmailSyntaxCorrect) {
+		return res
+			.status(400)
+			.json({ msg: 'Email must be a valid Email. e.g. abc@something.com' });
+	}
+
+
 	// checking the length of password
 	if (password.length < 6) {
 		return res
