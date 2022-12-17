@@ -12,6 +12,7 @@ const refreshRouter = require('./routes/refresh.router');
 const registrationRouter = require('./routes/registration.router');
 const biodataRouter = require('./routes/biodata.router');
 const forgetAndResetRouter = require('./routes/forget-and-reset.router');
+const contactRequestRouter = require('./routes/contact-request.router')
 
 // cors option
 const corsOptions = require('./config/corsOptions');
@@ -57,5 +58,6 @@ app.use('/refresh', refreshRouter);
 app.use('/v1/api', registrationRouter);
 app.use('/v1/api', biodataRouter);
 app.use('/v1/api', forgetAndResetRouter);
+app.use('/v1/api', contactRequestRouter);
 
 module.exports = app;

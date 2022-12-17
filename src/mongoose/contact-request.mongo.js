@@ -17,6 +17,10 @@ const contactRequestSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	totalCost: {
+		type: String,
+		required: true,
+	},
 	biodatasId: {
 		type: String,
 		required: true,
@@ -51,6 +55,6 @@ const contactRequestSchema = new mongoose.Schema({
 	},
 });
 
-const contactRequestModel = mongoose.model('User', contactRequestSchema);
+const contactRequestModel = mongoose.model('ContactRequest', contactRequestSchema);
 
 module.exports = contactRequestModel;
