@@ -8,6 +8,9 @@ const {
 	getBiodatasUploadedIn15Days,
 	getBiodatasUploadedInMonth,
 	getBiodatasUploadedInYear,
+	getTotalBiodatas,
+	getTotalMaleBiodatas,
+	getTotalFemaleBiodatas,
 } = require('../models/biodata.model');
 
 const { getBiodatas } = require('../services/getBiodatas-helper');
@@ -51,6 +54,7 @@ const BiodatasWithPaginationGET = async (req, res) => {
 			page,
 			limit
 		);
+		console.log(biodatas);
 		return res.status(200).json(biodatas);
 	} catch(err) {
 		console.log(err);
@@ -111,10 +115,21 @@ const biodatasUploadedInaMonthGET = async (req, res) => {
 		return res.status(500).json({ msg: 'Internal Server Error' });
 	}
 };
+
 // get biodatas uploaded in a month
 const biodatasUploadedInaYearGET = async (req, res) => {
 	try {
 		const biodatas = await getBiodatasUploadedInYear();
+		return res.status(200).json(biodatas);
+	} catch (err) {
+		return res.status(500).json({ msg: 'Internal Server Error' });
+	}
+};
+
+// get male total biodatas
+const totalMaleBiodatasGET = async (req, res) => {
+	try {
+		const biodatas = await getTotalBiodatas();
 		return res.status(200).json(biodatas);
 	} catch (err) {
 		return res.status(500).json({ msg: 'Internal Server Error' });
@@ -131,4 +146,5 @@ module.exports = {
 	biodatasUploadedIn15DaysGET,
 	biodatasUploadedInaMonthGET,
 	biodatasUploadedInaYearGET,
+	totalMaleBiodatasGET,
 };

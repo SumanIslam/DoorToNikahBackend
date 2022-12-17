@@ -76,7 +76,9 @@ async function getBiodatasUploadedThisWeek() {
 		let pastDate = ourDate.getDate() - 7;
 		ourDate.setDate(pastDate);
 
-		return await biodataModel.find({ date: { $gt: ourDate, $lt: Date.now() } });
+		return await biodataModel
+			.find({ date: { $gt: ourDate, $lt: Date.now() } })
+			.sort({ date: 1 });
 	}catch(err) {
     console.log(err);
   }
@@ -92,7 +94,9 @@ async function getBiodatasUploadedIn15Days() {
 		let pastDate = ourDate.getDate() - 15;
 		ourDate.setDate(pastDate);
 
-		return await biodataModel.find({ date: { $gt: ourDate, $lt: Date.now() } });
+		return await biodataModel
+			.find({ date: { $gt: ourDate, $lt: Date.now() } })
+			.sort({ date: 1 });
 	}catch(err) {
     console.log(err);
   }
@@ -111,7 +115,9 @@ async function getBiodatasUploadedInMonth() {
 		let pastDate = ourDate.getDate() - numberOfDaysInThisMonth;
 		ourDate.setDate(pastDate);
 
-		return await biodataModel.find({ date: { $gt: ourDate, $lt: Date.now() } });
+		return await biodataModel
+			.find({ date: { $gt: ourDate, $lt: Date.now() } })
+			.sort({ date: 1 });
 	}catch(err) {
     console.log(err);
   }
@@ -130,11 +136,46 @@ async function getBiodatasUploadedInYear() {
 		let pastDate = ourDate.getDate() - numberOfDaysInThisYear;
 		ourDate.setDate(pastDate);
 
-		return await biodataModel.find({ date: { $gt: ourDate, $lt: Date.now() } });
+		return await biodataModel
+			.find({ date: { $gt: ourDate, $lt: Date.now() } })
+			.sort({ date: 1 });
 	}catch(err) {
     console.log(err);
   }
 }
+
+// get total biodatas
+async function getTotalBiodatas() {
+  try {return await biodataModel.find({}).sort({ date: 1 });
+	}catch(err) {
+    console.log(err);
+  }
+}
+
+// get total male biodatas
+async function getTotalMaleBiodatas() {
+  try {return await biodataModel
+		.find({
+			'generalInfo.biodataType': 'পাত্রের বায়োডাটা',
+		})
+		.sort({ date: 1 });
+	}catch(err) {
+    console.log(err);
+  }
+}
+
+// get total female biodatas
+async function getTotalFemaleBiodatas() {
+  try {return await biodataModel
+		.find({
+			'generalInfo.biodataType': 'পাত্রীর বায়োডাটা',
+		})
+		.sort({ date: 1 });
+	}catch(err) {
+    console.log(err);
+  }
+}
+
 module.exports = {
 	saveBiodata,
 	getSingleBiodata,
@@ -146,4 +187,7 @@ module.exports = {
 	getBiodatasUploadedIn15Days,
 	getBiodatasUploadedInMonth,
 	getBiodatasUploadedInYear,
+	getTotalBiodatas,
+	getTotalMaleBiodatas,
+	getTotalFemaleBiodatas,
 };
