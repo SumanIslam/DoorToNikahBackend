@@ -67,7 +67,7 @@ async function getTotalFemaleCountOfBiodata() {
 }
 
 // get biodatas uploaded in 7 days from now
-async function getBiodatasUploadedThisWeek() {
+async function getBiodatasUploadedThisWeekCount() {
   try {
 		// Get today's date using the JavaScript Date object.
 		let ourDate = new Date();
@@ -77,15 +77,14 @@ async function getBiodatasUploadedThisWeek() {
 		ourDate.setDate(pastDate);
 
 		return await biodataModel
-			.find({ date: { $gt: ourDate, $lt: Date.now() } })
-			.sort({ date: 1 });
+			.countDocuments({ date: { $gt: ourDate, $lt: Date.now() } });
 	}catch(err) {
     console.log(err);
   }
 }
 
 // get biodatas uploaded in 15 days from now
-async function getBiodatasUploadedIn15Days() {
+async function getBiodatasUploadedIn15DaysCount() {
   try {
 		// Get today's date using the JavaScript Date object.
 		let ourDate = new Date();
@@ -95,15 +94,14 @@ async function getBiodatasUploadedIn15Days() {
 		ourDate.setDate(pastDate);
 
 		return await biodataModel
-			.find({ date: { $gt: ourDate, $lt: Date.now() } })
-			.sort({ date: 1 });
+			.countDocuments({ date: { $gt: ourDate, $lt: Date.now() } });
 	}catch(err) {
     console.log(err);
   }
 }
 
 // get biodatas uploaded in a month from now
-async function getBiodatasUploadedInMonth() {
+async function getBiodatasUploadedInMonthCount() {
   try {
 		// Get today's date using the JavaScript Date object.
 		let ourDate = new Date();
@@ -115,16 +113,16 @@ async function getBiodatasUploadedInMonth() {
 		let pastDate = ourDate.getDate() - numberOfDaysInThisMonth;
 		ourDate.setDate(pastDate);
 
-		return await biodataModel
-			.find({ date: { $gt: ourDate, $lt: Date.now() } })
-			.sort({ date: 1 });
+		return await biodataModel.countDocuments({
+			date: { $gt: ourDate, $lt: Date.now() },
+		});
 	}catch(err) {
     console.log(err);
   }
 }
 
 // get biodatas uploaded in a year from now
-async function getBiodatasUploadedInYear() {
+async function getBiodatasUploadedInYearCount() {
   try {
 		// Get today's date using the JavaScript Date object.
 		let ourDate = new Date();
@@ -137,8 +135,7 @@ async function getBiodatasUploadedInYear() {
 		ourDate.setDate(pastDate);
 
 		return await biodataModel
-			.find({ date: { $gt: ourDate, $lt: Date.now() } })
-			.sort({ date: 1 });
+			.countDocuments({ date: { $gt: ourDate, $lt: Date.now() } });
 	}catch(err) {
     console.log(err);
   }
@@ -154,7 +151,8 @@ async function getTotalBiodatas() {
 
 // get total male biodatas
 async function getTotalMaleBiodatas() {
-  try {return await biodataModel
+  try {
+		return await biodataModel
 		.find({
 			'generalInfo.biodataType': 'পাত্রের বায়োডাটা',
 		})
@@ -166,7 +164,8 @@ async function getTotalMaleBiodatas() {
 
 // get total female biodatas
 async function getTotalFemaleBiodatas() {
-  try {return await biodataModel
+  try {
+		return await biodataModel
 		.find({
 			'generalInfo.biodataType': 'পাত্রীর বায়োডাটা',
 		})
@@ -176,6 +175,19 @@ async function getTotalFemaleBiodatas() {
   }
 }
 
+// get unapproved biodatas
+async function getAllUnApprovedBiodatas() {
+	try {
+		return await biodataModel
+			.find({
+				isApproved: false,
+			})
+			.sort({ date: 1 });
+	} catch (err) {
+		console.log(err);
+	}
+}
+
 module.exports = {
 	saveBiodata,
 	getSingleBiodata,
@@ -183,11 +195,8 @@ module.exports = {
 	getTotalCountOfBiodata,
 	getTotalMaleCountOfBiodata,
 	getTotalFemaleCountOfBiodata,
-	getBiodatasUploadedThisWeek,
-	getBiodatasUploadedIn15Days,
-	getBiodatasUploadedInMonth,
-	getBiodatasUploadedInYear,
-	getTotalBiodatas,
-	getTotalMaleBiodatas,
-	getTotalFemaleBiodatas,
+	getBiodatasUploadedThisWeekCount,
+	getBiodatasUploadedIn15DaysCount,
+	getBiodatasUploadedInMonthCount,
+	getBiodatasUploadedInYearCount,
 };

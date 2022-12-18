@@ -4,10 +4,10 @@ const {
 	getTotalCountOfBiodata,
 	getTotalMaleCountOfBiodata,
 	getTotalFemaleCountOfBiodata,
-	getBiodatasUploadedThisWeek,
-	getBiodatasUploadedIn15Days,
-	getBiodatasUploadedInMonth,
-	getBiodatasUploadedInYear,
+	getBiodatasUploadedThisWeekCount,
+	getBiodatasUploadedIn15DaysCount,
+	getBiodatasUploadedInMonthCount,
+	getBiodatasUploadedInYearCount,
 	getTotalBiodatas,
 	getTotalMaleBiodatas,
 	getTotalFemaleBiodatas,
@@ -54,7 +54,6 @@ const BiodatasWithPaginationGET = async (req, res) => {
 			page,
 			limit
 		);
-		console.log(biodatas);
 		return res.status(200).json(biodatas);
 	} catch(err) {
 		console.log(err);
@@ -87,9 +86,9 @@ const countBiodataGET = async (req, res) => {
 };
 
 // get biodatas uploaded this week
-const biodatasUploadedThisWeekGET = async (req, res) => {
+const countBiodatasUploadedThisWeekGET = async (req, res) => {
 	try {
-		const biodatas = await getBiodatasUploadedThisWeek();
+		const biodatas = await getBiodatasUploadedThisWeekCount();
 		return res.status(200).json(biodatas);
 	} catch (err) {
 		return res.status(500).json({ msg: 'Internal Server Error' });
@@ -97,9 +96,9 @@ const biodatasUploadedThisWeekGET = async (req, res) => {
 }
 
 // get biodatas uploaded in 15 days
-const biodatasUploadedIn15DaysGET = async (req, res) => {
+const countBiodatasUploadedIn15DaysGET = async (req, res) => {
 	try {
-		const biodatas = await getBiodatasUploadedIn15Days();
+		const biodatas = await getBiodatasUploadedIn15DaysCount();
 		return res.status(200).json(biodatas);
 	} catch (err) {
 		return res.status(500).json({ msg: 'Internal Server Error' });
@@ -107,9 +106,9 @@ const biodatasUploadedIn15DaysGET = async (req, res) => {
 }
 
 // get biodatas uploaded in a month
-const biodatasUploadedInaMonthGET = async (req, res) => {
+const countBiodatasUploadedInaMonthGET = async (req, res) => {
 	try {
-		const biodatas = await getBiodatasUploadedInMonth();
+		const biodatas = await getBiodatasUploadedInMonthCount();
 		return res.status(200).json(biodatas);
 	} catch (err) {
 		return res.status(500).json({ msg: 'Internal Server Error' });
@@ -117,9 +116,9 @@ const biodatasUploadedInaMonthGET = async (req, res) => {
 };
 
 // get biodatas uploaded in a month
-const biodatasUploadedInaYearGET = async (req, res) => {
+const countBiodatasUploadedInaYearGET = async (req, res) => {
 	try {
-		const biodatas = await getBiodatasUploadedInYear();
+		const biodatas = await getBiodatasUploadedInYearCount();
 		return res.status(200).json(biodatas);
 	} catch (err) {
 		return res.status(500).json({ msg: 'Internal Server Error' });
@@ -142,9 +141,9 @@ module.exports = {
 	countBiodataGET,
 	BiodatasGET,
 	BiodatasWithPaginationGET,
-	biodatasUploadedThisWeekGET,
-	biodatasUploadedIn15DaysGET,
-	biodatasUploadedInaMonthGET,
-	biodatasUploadedInaYearGET,
+	countBiodatasUploadedThisWeekGET,
+	countBiodatasUploadedIn15DaysGET,
+	countBiodatasUploadedInaMonthGET,
+	countBiodatasUploadedInaYearGET,
 	totalMaleBiodatasGET,
 };
