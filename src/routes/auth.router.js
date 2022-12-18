@@ -1,6 +1,11 @@
 const express = require('express');
 const passport = require('passport');
-const { signupPOST, loginPOST, logOut } = require('../controllers/auth.controllers')
+const {
+	signupPOST,
+	loginPOST,
+	logOut,
+	totalUserCountGET,
+} = require('../controllers/auth.controllers');
 
 const CLIENT_URL = 'http://localhost:3000/';
 
@@ -9,6 +14,7 @@ const authRouter = express.Router();
 authRouter.post('/users/auth/signup', signupPOST)
 authRouter.post('/users/auth/login', loginPOST)
 authRouter.get('/users/auth/logout', logOut)
+authRouter.get('/users/userCount', totalUserCountGET)
 
 // google auth failed routes
 authRouter.get('/login/failed', (req, res) => {
@@ -17,7 +23,6 @@ authRouter.get('/login/failed', (req, res) => {
 // google auth success routes
 authRouter.get('/login/success', (req, res) => {
   res.redirect(CLIENT_URL)
-  
 })
 // google auth success routes
 authRouter.get('/login/success/again', (req, res) => {

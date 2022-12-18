@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const userModel = require('../mongoose/user.mongo');
 
+// save user to db
 async function saveUser(newUser) {
   try {
 		// generating hashed password
@@ -20,6 +21,7 @@ async function saveUser(newUser) {
   }
 }
 
+// get user by id from db
 async function getUser(id) {
   try {
     return await userModel.findById(id);
@@ -28,7 +30,17 @@ async function getUser(id) {
   }
 }
 
-module.exports = {
-  saveUser,
-  getUser
+// get the total user counts
+async function getUsersCount() {
+  try {
+    return await userModel.countDocuments({});
+  } catch(err) {
+    console.log(err);
+  }
 }
+
+module.exports = {
+	saveUser,
+	getUser,
+	getUsersCount,
+};

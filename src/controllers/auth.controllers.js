@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const { saveUser } = require("../models/user.model")
+const { saveUser, getUsersCount } = require('../models/user.model');
 const usersModel = require('../mongoose/user.mongo');
 
 const { createAccessToken, createRefreshToken } = require('../services/tokenGeneration');
@@ -135,8 +135,18 @@ const logOut = async (req, res) => {
 	return res.sendStatus(204);
 };
 
-module.exports = {
-  signupPOST,
-  loginPOST,
-	logOut
+const totalUserCountGET = async (req, res) => {
+	try {
+		const usersCount = await getUsersCount();
+		return res.status(200).json(usersCount);
+	} catch(err) {
+		return res.status(500).json({msg: 'Internal Server Error'})
+	}
 }
+
+module.exports = {
+	signupPOST,
+	loginPOST,
+	logOut,
+	totalUserCountGET,
+};
