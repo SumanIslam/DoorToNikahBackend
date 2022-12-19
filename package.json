@@ -5,6 +5,7 @@
 	"main": "src/server.js",
 	"scripts": {
 		"start": "node src/server.js",
+		"build": "node build",
 		"watch": "nodemon src/server.js"
 	},
 	"author": "Suman Islam, S.M. Samrat, Fatema Akter, Ismam Mahdi",

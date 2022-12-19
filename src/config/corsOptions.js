@@ -1,8 +1,8 @@
 const whiteList = [
-	'https://www.yoursite.com',
+	'https://doortonikah.vercel.app/',
 	'http://127.0.0.1:3000',
 	'http://localhost:3000',
-	'http://localhost:5000'
+	'http://localhost:5000',
 ];
 const corsOptions = {
 	origin: (origin, callback) => {
