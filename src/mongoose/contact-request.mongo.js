@@ -53,6 +53,10 @@ const contactRequestSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now,
 	},
+	done: {
+		type: Boolean,
+		default: false,
+	}
 });
 
 const contactRequestModel = mongoose.model('ContactRequest', contactRequestSchema);

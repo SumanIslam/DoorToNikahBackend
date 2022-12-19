@@ -1,7 +1,7 @@
 const contactRequestModel = require('../mongoose/contact-request.mongo');
 const userModel = require('../mongoose/user.mongo')
 
-const { saveContactRequest } = require('../models/contact-request.model')
+const { saveContactRequest, getContactRequests } = require('../models/contact-request.model')
 
 
 const contactRequestPOST = async(req, res) => {
@@ -24,4 +24,16 @@ const contactRequestPOST = async(req, res) => {
   }
 }
 
-module.exports = contactRequestPOST;
+const contactRequestGET = async (req, res) => {
+  try {
+		const contactRequests = await getContactRequests();
+		return res.status(200).json(contactRequests);
+	} catch (err) {
+		return res.status(500).json({ msg: 'Internal Server Error' });
+	}
+}
+
+module.exports = {
+	contactRequestPOST,
+	contactRequestGET,
+};
