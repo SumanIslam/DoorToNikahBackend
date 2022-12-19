@@ -5,23 +5,30 @@ const {
 	countBiodataGET,
 	BiodatasGET,
 	BiodatasWithPaginationGET,
-	countBiodatasUploadedThisWeekGET,
-	countBiodatasUploadedIn15DaysGET,
-	countBiodatasUploadedInaMonthGET,
-	countBiodatasUploadedInaYearGET,
+	totalUnApproveBiodatasGET,
+	totalUnApproveBiodatasWithPaginationGET,
+	acceptedBiodataPOST,
+	approvedBiodatasGET,
+	approvedBiodatasWithPaginationGET,
 } = require('../controllers/biodata.controller');
 
 const biodataRouter = express.Router();
 
 
 biodataRouter.get('/biodatas', BiodatasGET);
+biodataRouter.get('/approved-biodatas', approvedBiodatasGET);
 biodataRouter.get('/biodatasWithPagination', BiodatasWithPaginationGET);
+biodataRouter.get('/approved-biodatasWithPagination', approvedBiodatasWithPaginationGET);
 biodataRouter.get('/biodatas/biodata', SingleBiodataGET);
 biodataRouter.delete('/biodatas/biodata/delete', deleteBiodataGET);
 biodataRouter.get('/biodatas/count', countBiodataGET);
-biodataRouter.get('/biodatas/this-week', countBiodatasUploadedThisWeekGET);
-biodataRouter.get('/biodatas/15days', countBiodatasUploadedIn15DaysGET);
-biodataRouter.get('/biodatas/this-month', countBiodatasUploadedInaMonthGET);
-biodataRouter.get('/biodatas/this-year', countBiodatasUploadedInaYearGET);
+biodataRouter.get('/biodatas/unapproved-biodatas', totalUnApproveBiodatasGET);
+biodataRouter.get(
+	'/biodatas/unapproved-biodatas-pagination',
+	totalUnApproveBiodatasWithPaginationGET
+);
+biodataRouter.post(
+	'/biodatas/accepted', acceptedBiodataPOST
+);
 
 module.exports = biodataRouter;

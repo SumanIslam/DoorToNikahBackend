@@ -141,35 +141,64 @@ async function getBiodatasUploadedInYearCount() {
   }
 }
 
+// get total unmarried biodatas count
+async function getTotalUnmarriedBiodatasCount() {
+	try {
+		return await biodataModel.countDocuments({
+			'generalInfo.maritalStatus': 'অবিবাহিত',
+		});
+	} catch(err) {
+		console.log(err);
+	}
+}
+
+// get total married biodatas count
+async function getTotalMarriedBiodatasCount() {
+	try {
+		return await biodataModel.countDocuments({
+			'generalInfo.maritalStatus': 'বিবাহিত',
+		});
+	} catch(err) {
+		console.log(err);
+	}
+}
+
+// get total divorced biodatas count
+async function getTotalDivorcedBiodatasCount() {
+	try {
+		return await biodataModel.countDocuments({
+			'generalInfo.maritalStatus': 'ডিভোর্সড',
+		});
+	} catch(err) {
+		console.log(err);
+	}
+}
+
+// get total widow biodatas count
+async function getTotalWidowBiodatasCount() {
+	try {
+		return await biodataModel.countDocuments({
+			'generalInfo.maritalStatus': 'বিধবা',
+		});
+	} catch(err) {
+		console.log(err);
+	}
+}
+
+// get total widower biodatas count
+async function getTotalWidowerBiodatasCount() {
+	try {
+		return await biodataModel.countDocuments({
+			'generalInfo.maritalStatus': 'বিপত্নীক',
+		});
+	} catch(err) {
+		console.log(err);
+	}
+}
+
 // get total biodatas
 async function getTotalBiodatas() {
   try {return await biodataModel.find({}).sort({ date: 1 });
-	}catch(err) {
-    console.log(err);
-  }
-}
-
-// get total male biodatas
-async function getTotalMaleBiodatas() {
-  try {
-		return await biodataModel
-		.find({
-			'generalInfo.biodataType': 'পাত্রের বায়োডাটা',
-		})
-		.sort({ date: 1 });
-	}catch(err) {
-    console.log(err);
-  }
-}
-
-// get total female biodatas
-async function getTotalFemaleBiodatas() {
-  try {
-		return await biodataModel
-		.find({
-			'generalInfo.biodataType': 'পাত্রীর বায়োডাটা',
-		})
-		.sort({ date: 1 });
 	}catch(err) {
     console.log(err);
   }
@@ -188,6 +217,22 @@ async function getAllUnApprovedBiodatas() {
 	}
 }
 
+// get unapproved biodatas
+async function getAllUnApprovedBiodatasWithPagination(skip, limit) {
+	console.log(skip, limit);
+	try {
+		return await biodataModel
+			.find({
+				isApproved: false,
+			})
+			.skip(skip)
+			.limit(limit)
+			.sort({ date: 1 });
+	} catch (err) {
+		console.log(err);
+	}
+}
+
 module.exports = {
 	saveBiodata,
 	getSingleBiodata,
@@ -199,4 +244,11 @@ module.exports = {
 	getBiodatasUploadedIn15DaysCount,
 	getBiodatasUploadedInMonthCount,
 	getBiodatasUploadedInYearCount,
+	getTotalUnmarriedBiodatasCount,
+	getTotalMarriedBiodatasCount,
+	getTotalDivorcedBiodatasCount,
+	getTotalWidowBiodatasCount,
+	getTotalWidowerBiodatasCount,
+	getAllUnApprovedBiodatas,
+	getAllUnApprovedBiodatasWithPagination,
 };
