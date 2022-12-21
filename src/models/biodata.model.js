@@ -9,6 +9,7 @@ async function saveBiodata(newBiodata) {
     }, newBiodata, {
       upsert: true
     });
+	  console.log(biodata);
     return biodata;
   } catch(err) {
     console.log(err);
