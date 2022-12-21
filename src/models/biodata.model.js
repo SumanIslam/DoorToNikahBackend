@@ -7,7 +7,8 @@ async function saveBiodata(newBiodata) {
     const biodata = await biodataModel.findOneAndUpdate({
       biodataId: newBiodata.biodataId
     }, newBiodata, {
-      upsert: true
+      upsert: true,
+	returnOriginal: false
     });
 	  console.log(biodata);
     return biodata;
