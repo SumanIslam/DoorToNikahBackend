@@ -4,12 +4,16 @@ const { daysInThisMonth, daysInYear } = require('../services/dates');
 // save single biodata to db
 async function saveBiodata(newBiodata) {
   try {
-    const biodata = await biodataModel.findOneAndUpdate({
-      biodataId: newBiodata.biodataId
-    }, newBiodata, {
-      upsert: true
-    });
-	  console.log(biodata);
+    const biodata = await biodataModel.findOneAndUpdate(
+			{
+				biodataId: newBiodata.biodataId,
+			},
+			newBiodata,
+			{
+				upsert: true,
+				returnOriginal: false,
+			}
+		);
     return biodata;
   } catch(err) {
     console.log(err);

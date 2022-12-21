@@ -94,7 +94,6 @@ const registrationPOST = async (req, res) => {
 	// save biodata in db
 	try {
 		const biodata = await saveBiodata(req.body);
-		console.log(biodata);
 		return res.status(200).json(biodata)
 	} catch(err) {
 		return res.status(500).json({ msg: 'Internal Server Error' });
