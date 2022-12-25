@@ -5,6 +5,7 @@ const {
 	loginPOST,
 	logOut,
 	totalUserCountGET,
+	adminPrivilegePOST,
 } = require('../controllers/auth.controllers');
 
 const CLIENT_URL = 'http://localhost:3000/';
@@ -14,12 +15,14 @@ const authRouter = express.Router();
 authRouter.post('/users/auth/signup', signupPOST)
 authRouter.post('/users/auth/login', loginPOST)
 authRouter.get('/users/auth/logout', logOut)
-authRouter.get('/users/userCount', totalUserCountGET)
+authRouter.get('/users/userCount', totalUserCountGET);
+authRouter.post('/users/admin-privilege', adminPrivilegePOST);
 
 // google auth failed routes
 authRouter.get('/login/failed', (req, res) => {
   return res.status(401).json({msg: 'Sorry, Login failed. Try again later'})
 })
+
 // google auth success routes
 authRouter.get('/login/success', (req, res) => {
   res.redirect(CLIENT_URL)

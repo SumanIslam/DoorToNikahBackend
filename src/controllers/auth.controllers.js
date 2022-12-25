@@ -1,6 +1,10 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const { saveUser, getUsersCount } = require('../models/user.model');
+const {
+	saveUser,
+	getUsersCount,
+	adminPrivilege,
+} = require('../models/user.model');
 const usersModel = require('../mongoose/user.mongo');
 
 const { createAccessToken, createRefreshToken } = require('../services/tokenGeneration');
@@ -144,9 +148,28 @@ const totalUserCountGET = async (req, res) => {
 	}
 }
 
+const adminPrivilegePOST = async (req, res) => {
+	const { email, role } = req.body;
+	console.log(req.body);
+
+	const oldUser = await usersModel.findOne({email: email});
+	console.log(oldUser);
+
+	if(!oldUser) {
+		return res.status(400).json({msg: 'Email is not Registered'})
+	}
+	try {
+		const user = await adminPrivilege(email, role)
+		return res.status(200).json(user);
+	}catch(err) {
+		return res.status(500).json({msg: 'Internal Server Error'})
+	}
+}
+
 module.exports = {
 	signupPOST,
 	loginPOST,
 	logOut,
 	totalUserCountGET,
+	adminPrivilegePOST
 };

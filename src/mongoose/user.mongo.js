@@ -18,7 +18,8 @@ const userSchema = new mongoose.Schema({
 			type: Number,
 			default: 2001
 		},
-		Admin: Number
+		Admin: Number,
+		Editor: Number,
 	},
 	refreshToken: String,
 	biodataId: {

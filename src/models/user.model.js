@@ -39,8 +39,52 @@ async function getUsersCount() {
   }
 }
 
+// make user admin or editor
+async function adminPrivilege(email, role) {
+  console.log(role);
+  try {
+    if(role === 'editor') {
+      return await userModel.findOneAndUpdate(
+				{
+					email: email,
+				},
+				{
+					$set: {
+						'roles.Editor': 2030,
+					},
+				},
+				{
+					upsert: true,
+          returnOriginal: false,
+				}
+			);
+    }
+    if(role === 'admin') {
+      return await userModel.findOneAndUpdate(
+				{
+					email: email,
+				},
+				{
+					$set: {
+						'roles.Admin': 5056,
+					},
+				},
+				{
+					upsert: true,
+          returnOriginal: false,
+				}
+			);
+    }
+    
+  } catch(err) {
+    console.log(err);
+  }
+}
+
 module.exports = {
 	saveUser,
 	getUser,
 	getUsersCount,
+	adminPrivilege,
+	adminPrivilege,
 };
