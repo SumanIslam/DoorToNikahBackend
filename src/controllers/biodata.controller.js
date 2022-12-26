@@ -3,8 +3,11 @@ const {
 	getSingleBiodata,
 	deleteSingleBiodata,
 	getTotalCountOfBiodata,
+	getTotalCountOfApprovedBiodata,
 	getTotalMaleCountOfBiodata,
+	getTotalMaleCountOfApprovedBiodata,
 	getTotalFemaleCountOfBiodata,
+	getTotalFemaleCountOfApprovedBiodata,
 	getBiodatasUploadedThisWeekCount,
 	getBiodatasUploadedIn15DaysCount,
 	getBiodatasUploadedInMonthCount,
@@ -114,7 +117,12 @@ const deleteBiodataGET = async (req, res) => {
 const countBiodataGET = async (req, res) => {
 	try {
 		const totalBiodataCount = await getTotalCountOfBiodata();
+		const totalApprovedBiodataCount = await getTotalCountOfApprovedBiodata();
 		const totalMaleBiodataCount = await getTotalMaleCountOfBiodata();
+		const totalMaleApprovedBiodataCount =
+			await getTotalMaleCountOfApprovedBiodata();
+			const totalFemaleApprovedBiodataCount =
+				await getTotalFemaleCountOfApprovedBiodata();
 		const totalFemaleBiodataCount = await getTotalFemaleCountOfBiodata();
 		const totalBiodataUploadedThisWeekCount = await getBiodatasUploadedThisWeekCount();
 		const totalBiodataUploadedIn15DaysCount = await getBiodatasUploadedIn15DaysCount();
@@ -128,8 +136,11 @@ const countBiodataGET = async (req, res) => {
 		
 		return res.status(200).json({
 			totalBiodataCount,
+			totalApprovedBiodataCount,
 			totalMaleBiodataCount,
+			totalMaleApprovedBiodataCount,
 			totalFemaleBiodataCount,
+			totalFemaleApprovedBiodataCount,
 			totalBiodataUploadedThisWeekCount,
 			totalBiodataUploadedIn15DaysCount,
 			totalBiodataUploadedInaMonthCount,

@@ -45,6 +45,17 @@ async function getTotalCountOfBiodata() {
   }
 }
 
+// get total counts of approved biodata
+async function getTotalCountOfApprovedBiodata() {
+  try {
+    return await biodataModel.countDocuments({
+			isApproved: true,
+		});
+  } catch(err) {
+    console.log(err)
+  }
+}
+
 // get total counts of male biodata
 async function getTotalMaleCountOfBiodata() {
   try {
@@ -56,11 +67,35 @@ async function getTotalMaleCountOfBiodata() {
   }
 }
 
+// get total counts of approved male biodata
+async function getTotalMaleCountOfApprovedBiodata() {
+  try {
+    return await biodataModel.countDocuments({
+			'generalInfo.biodataType': 'পাত্রের বায়োডাটা',
+			isApproved: true,
+		});
+  } catch(err) {
+    console.log(err)
+  }
+}
+
 // get total counts of female biodata
 async function getTotalFemaleCountOfBiodata() {
   try {
     return await biodataModel.countDocuments({
 			'generalInfo.biodataType': 'পাত্রীর বায়োডাটা',
+		});
+  } catch(err) {
+    console.log(err)
+  }
+}
+
+// get total counts of female biodata
+async function getTotalFemaleCountOfApprovedBiodata() {
+  try {
+    return await biodataModel.countDocuments({
+			'generalInfo.biodataType': 'পাত্রীর বায়োডাটা',
+			isApproved: true,
 		});
   } catch(err) {
     console.log(err)
@@ -239,8 +274,11 @@ module.exports = {
 	getSingleBiodata,
 	deleteSingleBiodata,
 	getTotalCountOfBiodata,
+	getTotalCountOfApprovedBiodata,
 	getTotalMaleCountOfBiodata,
+	getTotalMaleCountOfApprovedBiodata,
 	getTotalFemaleCountOfBiodata,
+	getTotalFemaleCountOfApprovedBiodata,
 	getBiodatasUploadedThisWeekCount,
 	getBiodatasUploadedIn15DaysCount,
 	getBiodatasUploadedInMonthCount,
