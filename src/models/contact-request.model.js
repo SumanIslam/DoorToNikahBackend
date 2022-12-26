@@ -10,7 +10,26 @@ async function saveContactRequest(contactRequestDetails) {
 
 async function getContactRequests() {
 	try {
-		return await contactRequestModel.find({}).sort({created_at: 1})
+		return await contactRequestModel.find({ done: false }).sort({created_at: 1})
+	} catch(err) {
+		console.log(err);
+	}
+}
+
+async function contactRequestDone(email) {
+	try {
+		return await contactRequestModel.findOneAndUpdate(
+			{
+				userEmail: email,
+			},
+			{
+				done: true,
+			},
+			{
+				upsert: true,
+				returnOriginal: false,
+			}
+		);
 	} catch(err) {
 		console.log(err);
 	}
@@ -19,4 +38,5 @@ async function getContactRequests() {
 module.exports = {
 	saveContactRequest,
 	getContactRequests,
+	contactRequestDone,
 };

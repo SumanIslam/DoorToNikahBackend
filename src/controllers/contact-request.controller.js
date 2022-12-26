@@ -1,7 +1,11 @@
 const contactRequestModel = require('../mongoose/contact-request.mongo');
 const userModel = require('../mongoose/user.mongo')
 
-const { saveContactRequest, getContactRequests } = require('../models/contact-request.model')
+const {
+	saveContactRequest,
+	getContactRequests,
+	contactRequestDone,
+} = require('../models/contact-request.model');
 
 
 const contactRequestPOST = async(req, res) => {
@@ -33,7 +37,25 @@ const contactRequestGET = async (req, res) => {
 	}
 }
 
+const contactRequestDoneGET = async (req, res) => {
+  const { email } = req.query;
+
+  const contactRequest = contactRequestModel.find({email: email});
+  if(!contactRequest) {
+    return res.status(400).json({msg: 'There is no contact request by this email'})
+  }
+  
+  try {
+    const result = await contactRequestDone(email);
+    console.log(result);
+    return res.status(200).json({msg: 'The contact request is done successfully'})
+  } catch(err) {
+		return res.status(500).json({ msg: 'Internal Server Error' });
+  }
+}
+
 module.exports = {
 	contactRequestPOST,
 	contactRequestGET,
+	contactRequestDoneGET,
 };
