@@ -109,7 +109,7 @@ const resetPasswordPOST = async (req, res) => {
       }
     )
     // res.status(200).json({msg: 'Passwords has been updated successfully'})
-    res.redirect('http://localhost:3000')
+    res.redirect('https://doortonikah.vercel.app/');
 	} catch (err) {
 		console.log(err);
 		res.status(500).json({msg: 'Internal server Error'})
