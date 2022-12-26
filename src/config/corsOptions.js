@@ -1,5 +1,6 @@
 const whiteList = [
 	'https://doortonikah.vercel.app',
+	'https://doortonikahserver.onrender.com',
 	'http://127.0.0.1:3000',
 	'http://localhost:3000',
 	'http://localhost:5000',
