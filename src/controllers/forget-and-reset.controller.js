@@ -20,7 +20,7 @@ const forgetPasswordPOST = async (req, res) => {
         expiresIn: '5m'
       })
 
-    const link = `http://localhost:5000/v1/api/password/reset-password/${oldUser.id}/${token}`;
+    const link = `https://doortonikahserver.onrender.com/v1/api/password/reset-password/${oldUser.id}/${token}`;
     var transporter = nodemailer.createTransport({
 			service: 'gmail',
 			auth: {
